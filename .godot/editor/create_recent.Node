@@ -1,0 +1,15 @@
+ColorRect
+Camera3D
+TextureRect
+Sprite2D
+Control
+SubViewport
+SubViewportContainer
+CanvasLayer
+Node
+CollisionShape3D
+CharacterBody3D
+MeshInstance3D
+DirectionalLight3D
+LightmapGI
+TouchScreenButton

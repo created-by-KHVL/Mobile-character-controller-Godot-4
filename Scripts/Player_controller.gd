@@ -58,7 +58,7 @@ func player_movement():
 		speed = start_speed
 		camera.fov = move_toward(camera.fov, start_camera_fov, fov_change_speed)
 	
-	input_direction = Input.get_vector("move_left", "move_right", "move_foward", "move_back")
+	input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	if touch_input != null:
 		if touch_input.is_left_finger:
 			input_direction = touch_input.left_finger_direction
