@@ -81,8 +81,8 @@ func player_rotation():
 			controller_view_rotation = touch_input.right_finger_direction
 			camera.rotation_degrees.x -= controller_view_rotation.y * sensitivity 
 			rotation_degrees.y -= controller_view_rotation.x * sensitivity 
-	else:
-		sensitivity = 2
-		camera.rotation_degrees.x -= controller_view_rotation.x * sensitivity 
-		rotation_degrees.y -= controller_view_rotation.y * sensitivity
+		else:
+			sensitivity = 2
+			camera.rotation_degrees.x -= controller_view_rotation.x * sensitivity 
+			rotation_degrees.y -= controller_view_rotation.y * sensitivity
 	camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
