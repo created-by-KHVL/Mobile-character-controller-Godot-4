@@ -67,13 +67,13 @@ func handle_drag(event: InputEventScreenDrag):
 		right_finger_current_position = event.position
 
 func left_finger_action():
-	var left_finger_length: float = left_finger_start_position.distance_to(left_finger_current_position) / 10
-	const deadzone_length = 10 #This changes the value of the deadzone
+	var left_finger_length: float = left_finger_start_position.distance_to(left_finger_current_position)
+	const deadzone_length = 100 #This changes the value of the deadzone
 	if left_finger_length > deadzone_length:
 		left_finger_direction = left_finger_start_position.direction_to(left_finger_current_position)
 
 func right_finger_action():
-	var right_finger_length: float = right_finger_start_position.distance_to(right_finger_current_position) / 10
-	const deadzone_length = 10 #This changes the value of the deadzone
+	var right_finger_length: float = right_finger_start_position.distance_to(right_finger_current_position)
+	const deadzone_length = 100 #This changes the value of the deadzone
 	if right_finger_length > deadzone_length:
 		right_finger_direction = right_finger_start_position.direction_to(right_finger_current_position)
