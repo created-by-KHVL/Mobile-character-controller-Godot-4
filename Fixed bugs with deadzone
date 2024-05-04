@@ -20,15 +20,18 @@ func _ready():
 	half_screen_size = Vector2(DisplayServer.screen_get_size().x / 2, 0)
 
 func _process(delta):
-	if is_left_finger:
-		left_finger_action()
+	if is_left_finger and left_finger_current_position != Vector2.ZERO:
+		left_finger_action(delta)
 	else:
+		left_finger_current_position = Vector2.ZERO
 		left_finger_direction = Vector2.ZERO
 	
-	if is_right_finger:
-		right_finger_action()
+	if is_right_finger and right_finger_current_position != Vector2.ZERO:
+		right_finger_action(delta)
 	else:
+		right_finger_current_position = Vector2.ZERO
 		right_finger_direction = Vector2.ZERO
+	
 
 func _input(event):
 	if event is InputEventScreenTouch:
@@ -66,14 +69,16 @@ func handle_drag(event: InputEventScreenDrag):
 	elif event.index == first_right_finger_index:
 		right_finger_current_position = event.position
 
-func left_finger_action():
-	var left_finger_length: float = left_finger_start_position.distance_to(left_finger_current_position)
-	const deadzone_length = 100 #This changes the value of the deadzone
+func left_finger_action(delta):
+	var left_finger_length: float = left_finger_start_position.distance_to(left_finger_current_position) / 10
+	const deadzone_length = 10
+	
 	if left_finger_length > deadzone_length:
-		left_finger_direction = left_finger_start_position.direction_to(left_finger_current_position)
+		left_finger_direction = left_finger_start_position.direction_to(left_finger_current_position) * delta
 
-func right_finger_action():
-	var right_finger_length: float = right_finger_start_position.distance_to(right_finger_current_position)
-	const deadzone_length = 100 #This changes the value of the deadzone
+func right_finger_action(delta):
+	var right_finger_length: float = right_finger_start_position.distance_to(right_finger_current_position) / 10
+	const deadzone_length = 10
+	
 	if right_finger_length > deadzone_length:
-		right_finger_direction = right_finger_start_position.direction_to(right_finger_current_position)
+		right_finger_direction = right_finger_start_position.direction_to(right_finger_current_position) * delta
