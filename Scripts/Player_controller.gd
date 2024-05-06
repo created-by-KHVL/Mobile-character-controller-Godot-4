@@ -18,6 +18,7 @@ var input_direction: Vector2
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+
 func _ready():
 	start_speed = speed
 	start_camera_fov = camera.fov
@@ -45,7 +46,7 @@ func _physics_process(delta):
 	# Player rotation
 	if not is_jumping and not is_running:
 		player_rotation()
-
+	
 	move_and_slide()
 
 func player_movement():
@@ -58,18 +59,26 @@ func player_movement():
 		speed = start_speed
 		camera.fov = move_toward(camera.fov, start_camera_fov, fov_change_speed)
 	
-	input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back").normalized()
+	
 	if touch_input != null:
 		if touch_input.is_left_finger:
 			input_direction = touch_input.left_finger_direction
+			
 	var direction = (transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
 	if direction:
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
+		if touch_input.is_left_finger:
+			# Touch input
+			velocity.x = direction.x * speed * touch_input.left_finger_length
+			velocity.z = direction.z * speed * touch_input.left_finger_length
+		else:
+			# Gamepad input
+			velocity.x = direction.x * speed
+			velocity.z = direction.z * speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
-	
+
 func player_rotation():
 	var sensitivity: float
 	# Gamepad input
